@@ -75,8 +75,8 @@ sample_gamma <- function(p, gamma_old, beta_old, sigma0_old, sigma1_old, rho_old
     ## Step 1: Pick one gamma to sample; fix the rest
     gamma_1 <- 1
     gamma_0 <- 0
-    tau_1   <- (1 - gamma_1) * sigma0[j] + gamma_1 * sigma1[j]
-    tau_0   <- (1 - gamma_0) * sigma0[j] + gamma_0 * sigma1[j]
+    tau_1   <- (1 - gamma_1) * sigma0_old[j] + gamma_1 * sigma1_old[j]
+    tau_0   <- (1 - gamma_0) * sigma0_old[j] + gamma_0 * sigma1_old[j]
     
     ## Step 2: Compute logP for gamma_1
     A1     <- -0.5 * (tau_1^(-2)) * sum(beta_old[j,]^2)
@@ -270,6 +270,7 @@ sample_rho <- function(alpha, gamma_old){
   ## alpha: Hyperparameters for the beta distribution
   ## gamma_old: px1 matrix of current gamma values
 
+  p       <- length(gamma_old)
   rho_new <- rbeta(p, alpha[1] + 1 - gamma_old, alpha[2] + gamma_old)
   
   ## Output: 
@@ -474,7 +475,6 @@ simulation <- function(n, p, K, nIter = 1000, eps = 0.01, burn_percent = 0.33, s
   output
 
 }
-
 
 
 ########################
